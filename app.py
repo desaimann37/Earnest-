@@ -9,6 +9,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import streamlit as st
+
+# On Streamlit Cloud, secrets are in st.secrets — inject into env so Anthropic() picks them up
+try:
+    if "ANTHROPIC_API_KEY" in st.secrets:
+        os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
+except Exception:
+    pass
 from utils import new_run_id, run_dir, RUNS_DIR
 
 # ── Page config ────────────────────────────────────────────────────────────
